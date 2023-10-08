@@ -1,5 +1,6 @@
 package org.jubadeveloper.actors.graphql.models;
 
+import org.jubadeveloper.core.domain.channel.Channel;
 import org.jubadeveloper.core.domain.user.User;
 
 import java.util.List;
@@ -10,4 +11,5 @@ public interface UserControllerModel {
     Optional<User> getUserById(Long id);
     User insertUser (User user);
     User updateUser (Long id, User user);
+    List<Channel> channels (User user);
 }

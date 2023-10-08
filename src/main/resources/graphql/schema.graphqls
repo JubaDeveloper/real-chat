@@ -4,11 +4,26 @@ enum USER_LEVEL {
 }
 
 type User {
-    id: ID
+    id: ID!
     name: String!
     email: String
     password: String
     userLevel: USER_LEVEL
+    channels: [Channel]
+}
+
+type Permissions {
+    write: Boolean
+    join: Boolean
+}
+
+type Channel {
+    id: ID!
+    userId: Float
+    name: String
+    tags: [String]
+    description: String
+    permissions: Permissions
 }
 
 input UserInput {
@@ -18,11 +33,28 @@ input UserInput {
     userLevel: USER_LEVEL!
 }
 
+input PermissionsInput {
+    write: Boolean
+    join: Boolean
+}
+
+
+input ChannelInput {
+    userId: Float
+    name: String
+    tags: [String]
+    description: String
+    permissions: PermissionsInput
+}
+
 type Query {
     getAllUsers:[User]
+    listChannels: [Channel]
 }
 
 type Mutation {
     insertUser(user: UserInput): User
     updateUser(id: Float, newUser: UserInput): User
+    insertChannel(channel: ChannelInput): Channel
+    updateChannel(id: Float, newChannel: ChannelInput): Channel
 }

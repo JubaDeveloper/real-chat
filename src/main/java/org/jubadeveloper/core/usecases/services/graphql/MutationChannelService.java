@@ -1,7 +1,6 @@
 package org.jubadeveloper.core.usecases.services.graphql;
 
 import org.jubadeveloper.core.domain.channel.Channel;
-import org.jubadeveloper.core.domain.user.User;
 import org.jubadeveloper.core.ports.repository.ChannelRepository;
 import org.jubadeveloper.core.ports.repository.UserRepository;
 import org.jubadeveloper.core.usecases.exceptions.ChannelNotFoundException;

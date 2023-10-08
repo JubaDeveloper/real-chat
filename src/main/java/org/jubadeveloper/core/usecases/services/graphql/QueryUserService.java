@@ -27,7 +27,7 @@ public class QueryUserService implements QueryUserServiceModel {
     }
 
     @Override
-    public List<Channel> channel(User user) {
+    public List<Channel> getChannels (User user) {
         return channelRepository.findAll()
                 .stream()
                 .filter(channel -> channel.getUserId().equals(user.getId()))

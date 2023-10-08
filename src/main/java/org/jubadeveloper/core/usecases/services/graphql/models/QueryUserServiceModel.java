@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface QueryUserServiceModel {
     List<User> queryUsers ();
     Optional<User> queryUserById (Long id);
-    List<Channel> channel (User user);
+    List<Channel> getChannels (User user);
 }
