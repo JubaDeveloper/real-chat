@@ -1,6 +1,7 @@
 package org.jubadeveloper.core.usecases.services.graphql;
 
 import org.jubadeveloper.core.domain.channel.Channel;
+import org.jubadeveloper.core.domain.user.User;
 import org.jubadeveloper.core.ports.repository.ChannelRepository;
 import org.jubadeveloper.core.ports.repository.UserRepository;
 import org.jubadeveloper.core.usecases.exceptions.ChannelNotFoundException;
@@ -8,6 +9,9 @@ import org.jubadeveloper.core.usecases.exceptions.UserNotFoundException;
 import org.jubadeveloper.core.usecases.services.graphql.models.MutationChannelServiceModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class MutationChannelService implements MutationChannelServiceModel {
@@ -18,8 +22,12 @@ public class MutationChannelService implements MutationChannelServiceModel {
     @Override
     public Channel createChannel(Channel channel) throws UserNotFoundException {
         // First search by user
-        userRepository.findById(channel.getUserId()).orElseThrow(() -> new UserNotFoundException(channel.getUserId()));
-        return channelRepository.save(channel);
+        User user = userRepository.findById(channel.getUserId()).orElseThrow(() -> new UserNotFoundException(channel.getUserId()));
+        Channel channel1 = channelRepository.save(channel);
+        Set<Channel> userChannels = user.getChannels();
+        userChannels.add(channel1);
+        userRepository.save(user);
+        return channel1;
     }
 
     @Override
