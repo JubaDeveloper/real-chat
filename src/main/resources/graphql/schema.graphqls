@@ -1,0 +1,28 @@
+enum USER_LEVEL {
+    ADMIN,
+    CLIENT
+}
+
+type User {
+    id: ID
+    name: String!
+    email: String
+    password: String
+    userLevel: USER_LEVEL
+}
+
+input UserInput {
+    name: String!
+    email: String!
+    password: String!
+    userLevel: USER_LEVEL!
+}
+
+type Query {
+    getAllUsers:[User]
+}
+
+type Mutation {
+    insertUser(user: UserInput): User
+    updateUser(id: Float, newUser: UserInput): User
+}
