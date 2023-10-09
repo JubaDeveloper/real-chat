@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: juba
+      POSTGRES_USER: juba
+      POSTGRES_DB: realchat
+    secrets:
+      - db_password
+    ports:
+      - "5432:5432"
+  app:
+    build:
+      context: .
+      args:
+        JAR: real-chat-1.0.jar
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+secrets:
+  db_password:
+    file: secrets/db_password.txt
+networks:
+  application-net:
