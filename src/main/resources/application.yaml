@@ -1,0 +1,27 @@
+## Docker compose application env
+spring:
+  config:
+    active.on-profile: public-docker
+  graphql:
+    graphiql:
+      enabled: true
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: false
+  datasource:
+    url: "postgresql://db:5432/realchat"
+    username: "juba" # Test env
+    password: "juba" # Test env
+  jooq:
+    sql-dialect: "org.hibernate.dialect.PostgreSQLDialect"
+  jpa:
+    hibernate:
+      ddl-auto: "create-drop"
+    show-sql: true
+provider: "org.hibernate.jpa.HibernatePersistenceProvider"
+server:
+  port: 3000
+properties:
+  private_key: "12345"

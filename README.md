@@ -54,7 +54,7 @@ properties:
 
 - `docker-compose`
 ````bash
-docker compose up -d 
+docker compose up -d --force-recreate
 ````
 - `maven directly`
 ````bash
