@@ -7,6 +7,7 @@ import org.jubadeveloper.core.domain.user.User;
 @Embeddable
 public class Permission {
     private Boolean write;
+    @Column(name = "'join'")
     private Boolean join;
     public Permission () {}
     public Permission(Boolean write, Boolean join) {

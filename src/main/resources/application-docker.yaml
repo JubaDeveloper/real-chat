@@ -1,4 +1,6 @@
 spring:
+  config:
+    active.on-profile: docker
   graphql:
     graphiql:
       enabled: true
@@ -8,7 +10,7 @@ spring:
     livereload:
       enabled: false
   datasource:
-    url: "jdbc:postgresql://localhost:5432/realchat"
+    url: "jdbc:postgresql://db:5432/realchat"
     username: "juba" # Test env
     password: "juba" # Test env
   jooq:
