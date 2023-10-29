@@ -22,6 +22,7 @@ public class Channel {
     private Permission permissions;
     @Column(updatable = false, insertable = false)
     private Long userId;
+
     @ManyToMany(
             fetch = FetchType.LAZY,
             targetEntity = User.class
@@ -84,5 +85,13 @@ public class Channel {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Set<User> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Set<User> participants) {
+        this.participants = participants;
     }
 }

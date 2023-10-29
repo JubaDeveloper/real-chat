@@ -5,16 +5,17 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.jubadeveloper.core.domain.user.User;
+import org.jubadeveloper.core.ports.auth.AuthenticatorPort;
 import org.jubadeveloper.core.usecases.exceptions.AuthenticationException;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.UUID;
 
-public class Authenticator implements org.jubadeveloper.core.ports.auth.Authenticator {
+public class AuthenticatorAdapter implements AuthenticatorPort {
     private final JWTVerifier verifier;
     private final Algorithm algorithm;
-    public Authenticator (String privateKey) throws UnsupportedEncodingException {
+    public AuthenticatorAdapter(String privateKey) throws UnsupportedEncodingException {
         algorithm = Algorithm.HMAC256(privateKey);
         verifier = JWT.require(algorithm).withIssuer("auth0").build();
     }

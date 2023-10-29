@@ -1,6 +1,6 @@
 package org.jubadeveloper.core.usecases.services;
 
-import org.jubadeveloper.core.ports.auth.Authenticator;
+import org.jubadeveloper.core.ports.auth.AuthenticatorPort;
 import org.jubadeveloper.core.domain.user.User;
 import org.jubadeveloper.core.usecases.exceptions.AuthenticationException;
 import org.jubadeveloper.core.usecases.services.models.AuthServiceModel;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService implements AuthServiceModel {
     @Autowired
-    Authenticator authenticator;
+    AuthenticatorPort authenticator;
     @Override
     public String auth(User user) {
         return authenticator.auth(user);

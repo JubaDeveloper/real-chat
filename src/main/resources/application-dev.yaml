@@ -1,4 +1,6 @@
 spring:
+  config:
+    active.on-profile: dev
   graphql:
     graphiql:
       enabled: true
@@ -19,6 +21,6 @@ spring:
     show-sql: true
 provider: "org.hibernate.jpa.HibernatePersistenceProvider"
 server:
-  port: 3000
+  port: 8080
 properties:
   private_key: "12345"

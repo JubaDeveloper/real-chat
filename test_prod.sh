@@ -1,0 +1,1 @@
+/Applications/IntelliJ\ IDEA\ CE.app/Contents/plugins/maven/lib/maven3/bin/mvn test -Dspring.profiles.active=prod

@@ -40,3 +40,4 @@ build/
 ### Config files ###
 application-prod.yaml
 secrets/**
+static
