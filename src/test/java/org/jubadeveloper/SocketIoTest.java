@@ -19,12 +19,17 @@ import java.util.concurrent.TimeUnit;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SocketIoTest {
-    @Test
-    public void connectionTest () throws ExecutionException, InterruptedException {
+    public WebSocketStompClient getClient () {
         WebSocketClient webSocketClient = new StandardWebSocketClient();
         WebSocketStompClient stompClient = new WebSocketStompClient(webSocketClient);
         stompClient.setMessageConverter(new StringMessageConverter());
-        String url = "ws://127.0.0.1:3000/gs-guide-websocket";
+        return stompClient;
+    }
+    @Test
+    public void connectionTest () throws ExecutionException, InterruptedException {
+        WebSocketStompClient stompClient = this.getClient();
+        WebSocketStompClient stompClient2 = this.getClient();
+        String url = "ws://127.0.0.1:3000/websocket";
         StompSessionHandler sessionHandler = new StompSessionHandlerAdapter(){
             @Override
             public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
@@ -33,8 +38,13 @@ public class SocketIoTest {
         };
         CompletableFuture<StompSession> stompSessionCompletableFuture = stompClient.connectAsync(url, sessionHandler)
                 .orTimeout(1500, TimeUnit.MILLISECONDS);
+        CompletableFuture<StompSession> stompSessionCompletableFuture2 = stompClient2.connectAsync(url, sessionHandler)
+                .orTimeout(1500, TimeUnit.MILLISECONDS);
+
         StompSession stompSession = stompSessionCompletableFuture.get();
-        stompSession.subscribe("/topic/greetings", new StompFrameHandler() {
+        StompSession stompSession2 = stompSessionCompletableFuture.get();
+
+        stompSession2.subscribe("/topic/channel/1", new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
                 return null;
@@ -45,7 +55,19 @@ public class SocketIoTest {
                 System.out.println("New message received: "+ payload);
             }
         });
-        stompSession.send("/app/greetings", "Hello stomp server");
+
+        stompSession.subscribe("/topic/channel/1", new StompFrameHandler() {
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return null;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                System.out.println("New message received: "+ payload);
+            }
+        });
+        stompSession.send("/app/channel/1", "Hello stomp server");
         Thread.sleep(5000);
     }
 }
