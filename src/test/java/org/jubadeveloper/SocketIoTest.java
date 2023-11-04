@@ -28,7 +28,6 @@ public class SocketIoTest {
     @Test
     public void connectionTest () throws ExecutionException, InterruptedException {
         WebSocketStompClient stompClient = this.getClient();
-        WebSocketStompClient stompClient2 = this.getClient();
         String url = "ws://127.0.0.1:3000/websocket";
         StompSessionHandler sessionHandler = new StompSessionHandlerAdapter(){
             @Override
@@ -38,28 +37,14 @@ public class SocketIoTest {
         };
         CompletableFuture<StompSession> stompSessionCompletableFuture = stompClient.connectAsync(url, sessionHandler)
                 .orTimeout(1500, TimeUnit.MILLISECONDS);
-        CompletableFuture<StompSession> stompSessionCompletableFuture2 = stompClient2.connectAsync(url, sessionHandler)
-                .orTimeout(1500, TimeUnit.MILLISECONDS);
 
         StompSession stompSession = stompSessionCompletableFuture.get();
-        StompSession stompSession2 = stompSessionCompletableFuture.get();
 
-        stompSession2.subscribe("/topic/channel/1", new StompFrameHandler() {
-            @Override
-            public Type getPayloadType(StompHeaders headers) {
-                return null;
-            }
-
-            @Override
-            public void handleFrame(StompHeaders headers, Object payload) {
-                System.out.println("New message received: "+ payload);
-            }
-        });
 
         stompSession.subscribe("/topic/channel/1", new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
-                return null;
+                return String.class;
             }
 
             @Override
