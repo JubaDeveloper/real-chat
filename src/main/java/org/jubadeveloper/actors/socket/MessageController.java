@@ -13,7 +13,7 @@ public class MessageController {
     SimpMessagingTemplate simpMessagingTemplate;
     @MessageMapping("/channel/{id}")
     public void messageMapping (String message, @DestinationVariable String id) throws Exception {
-        simpMessagingTemplate.convertAndSend("/topic/channel/" + id, "Hello world");
+        simpMessagingTemplate.convertAndSend("/topic/channel/" + id, message);
     }
 
 }
